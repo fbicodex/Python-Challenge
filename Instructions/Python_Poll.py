@@ -1,9 +1,9 @@
 import os
 import csv
 
-pybank_csv = os.path.join("PyPoll", "Resources", "election_data.csv") 
+pypoll_csv = os.path.join("PyPoll", "Resources", "election_data.csv") 
 
-with open(pybank_csv) as csvfile:
+with open(pypoll_csv) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
 
     # Read the header row first 
@@ -29,7 +29,16 @@ with open(pybank_csv) as csvfile:
     #on current row -> looks to see what the canadite is, then adds a vote for that canadite (sees Khan, adds one to Khan)
         canadite_votes[index] =  canadite_votes[index] + 1
 
-    #Start printing with Headers and Total Votes
+    #Start printing with Headers and Total Votes to text file and terminal
+    f = open("poll_output.txt", "a")
+
+    print("-------------------------------------",file=f)
+    print("Election Results",file=f)
+    print("-------------------------------------",file=f)
+    print(f"Total Votes: {votes_total}",file=f)
+    print("-------------------------------------",file=f)
+
+
     print("-------------------------------------")
     print("Election Results")
     print("-------------------------------------")
@@ -50,11 +59,18 @@ with open(pybank_csv) as csvfile:
     #then finding the position for canadiate votes through candaties array -> if the value of the votes is less than the current iteration's position -> must be winner 
         if canadite_votes[canadites.index(winner)] < canadite_votes[i]:
             winner = canadites[i]
-    #printing the current iteration's canadites, vote percent for that canadite, and vote for that canadite
+    #printing the current iteration's canadites, vote percent for that canadite, and vote for that canadite to text file and terminal
+        print(f"{canadites[i]}:  {vote_percent}  ({canadite_votes[i]}) ",file=f)
+
         print(f"{canadites[i]}:  {vote_percent}  ({canadite_votes[i]}) ")
     #add one to i to move on to the next postion; once the length of canadites has been met -> end while loop
         i = i + 1
-    #print out winner
+    #print out winner to text file and terminal 
+    print("-------------------------------------",file=f)
+    print(f"The winner is: {winner}",file=f)
+
     print("-------------------------------------")
     print(f"The winner is: {winner}")
-  
+
+    f.close()
+
