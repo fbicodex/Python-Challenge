@@ -1,8 +1,40 @@
-
 import os
 import csv
 
-pybank_csv = os.path.join("Pybank", "Resources", "budget_data.csv") 
+
+########################################################
+# Helper Functions
+########################################################
+def printAnalysisToTerminal(Month_Total,Profit_Total,Average_Change,Big_Month,Big_Profit,Low_Month,Low_Profit):
+    print(f"----------------------------------------------------")
+    print(f"Financial Analysis:")
+    print(f"----------------------------------------------------")
+    print(f"Total Months: {Month_Total}")
+    print(f"Total: ${Profit_Total}")
+    print(f"Average Change: ${Average_Change}")
+    print(f"Greatest Increase in Profits: {Big_Month} ${Big_Profit}")
+    print(f"Greatest Decrease in Profits: {Low_Month} ${Low_Profit}")
+
+def printAnalysisToFile(fileName,Month_Total,Profit_Total,Average_Change,Big_Month,Big_Profit,Low_Month,Low_Profit):
+    f = open(fileName, "a")
+
+    print(f"----------------------------------------------------", file=f)
+    print(f"Financial Analysis:", file=f)
+    print(f"----------------------------------------------------", file=f)
+    print(f"Total Months: {Month_Total}", file=f)
+    print(f"Total: ${Profit_Total}", file=f)
+    print(f"Average Change: ${Average_Change}", file=f)
+    print(f"Greatest Increase in Profits: {Big_Month} ${Big_Profit}", file=f)
+    print(f"Greatest Decrease in Profits: {Low_Month} ${Low_Profit}", file=f)
+
+    f.close()
+
+
+
+########################################################
+# Main Program
+########################################################
+pybank_csv = os.path.join("PyBank", "Resources", "budget_data.csv") 
 
 with open(pybank_csv) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
@@ -46,27 +78,5 @@ with open(pybank_csv) as csvfile:
     Average_Change = Average_Change/(Month_Total - 1)
     
     #print out my findings to terminal and text file
-
-    f = open("bank_output.txt", "a")
-
-    print(f"----------------------------------------------------")
-    print(f"Financial Analysis:")
-    print(f"----------------------------------------------------")
-    print(f"Total Months: {Month_Total}")
-    print(f"Total: ${Profit_Total}")
-    print(f"Average Change: ${Average_Change}")
-    print(f"Greatest Increase in Profits: {Big_Month} ${Big_Profit}")
-    print(f"Greatest Decrease in Profits: {Low_Month} ${Low_Profit}")
-    
-    #text file print statmnts
-
-    print(f"----------------------------------------------------", file=f)
-    print(f"Financial Analysis:", file=f)
-    print(f"----------------------------------------------------", file=f)
-    print(f"Total Months: {Month_Total}", file=f)
-    print(f"Total: ${Profit_Total}", file=f)
-    print(f"Average Change: ${Average_Change}", file=f)
-    print(f"Greatest Increase in Profits: {Big_Month} ${Big_Profit}", file=f)
-    print(f"Greatest Decrease in Profits: {Low_Month} ${Low_Profit}", file=f)
-
-    f.close()
+    printAnalysisToTerminal(Month_Total,Profit_Total,Average_Change,Big_Month,Big_Profit,Low_Month,Low_Profit)
+    printAnalysisToFile("bank_output.txt",Month_Total,Profit_Total,Average_Change,Big_Month,Big_Profit,Low_Month,Low_Profit)
